@@ -5,9 +5,12 @@ const router = express.Router();
 import { drizzle } from 'drizzle-orm/node-postgres';
 import { OrderItem, order_items, orders, products } from './db/schema';
 
-const pool = new Pool({ connectionString: `${process.env.DATABASE_URL}`, ssl: { rejectUnauthorized: false } });
-const db = drizzle(pool);
-
+try{
+    const pool = new Pool({ connectionString: `${process.env.DATABASE_URL}`, ssl: { rejectUnauthorized: false } });
+    const db = drizzle(pool);
+} catch (err) {
+    console.error("Error forming a connection with DB: ", err);
+}
 // Error handler for database queries
 const handleQueryError = (err: any, res: Response) => {
   console.error('Error executing query:', err);

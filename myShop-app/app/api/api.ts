@@ -1,5 +1,7 @@
 const API_URL = process.env.EXPO_PUBLIC_API_URL;
 
+console.log("API URL IS", {API_URL})
+
 export interface Product {
   id: number;
   product_name: string;
