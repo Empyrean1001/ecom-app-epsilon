@@ -1,6 +1,7 @@
 import { NativeStackScreenProps, createNativeStackNavigator } from '@react-navigation/native-stack';
 import ProductDetails from '../screens/ProductDetails';
 import Products from '../screens/Products';
+import LogInPage from '../screens/LogInPage'
 import { TouchableOpacity, Text, View, StyleSheet } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
@@ -46,7 +47,6 @@ const CartButton = () => {
   );
 };
 
-const ProductsStackNav = () => {
 const ProductsStackNav = () => {
   return (
     <ProductsStack.Navigator

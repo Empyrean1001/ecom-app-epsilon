@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "604540428097",
+    "project_id": "app-tagging-ecom",
+    "storage_bucket": "app-tagging-ecom.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:604540428097:android:b73ece10d00294dbe84bc0",
+        "android_client_info": {
+          "package_name": "com.anonymous.myShop"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmHUWT3bEXGx4g9DPPYYA7GytKnBsgiNg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

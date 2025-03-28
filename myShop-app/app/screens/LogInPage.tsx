@@ -1,7 +1,7 @@
 // src/screens/Login.tsx
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
-import { auth } from '@react-native-firebase/auth';
+import {getAuth} from '@react-native-firebase/auth';
 import { NavigationProp } from '@react-navigation/native';
 import { ProductsStackParamList } from '../navigation/ProductsStackNav'; // or wherever this is defined
 import { app } from '../../App'; // Adjust the path to your firebaseConfig
@@ -13,6 +13,7 @@ type LoginProps = {
 const LogInPage: React.FC<LoginProps> = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const authInstance = getAuth();
 
   // Initialize the auth object once
 //   const auth = getAuth(app);
@@ -26,7 +27,7 @@ const LogInPage: React.FC<LoginProps> = ({ navigation }) => {
 //     return () => unsubscribe();
 //   }, []);
   useEffect(() => {
-    const unsubscribe = auth().onAuthStateChanged((user) => {
+    const unsubscribe = authInstance.onAuthStateChanged((user) => {
       if (user) {
         // If already logged in, navigate to Products
         navigation.replace('Products');
@@ -53,7 +54,7 @@ const LogInPage: React.FC<LoginProps> = ({ navigation }) => {
 //         Alert.alert('Login Error', error.message);
 //       });
 
-    auth()
+    authInstance
       .signInWithEmailAndPassword(email, password)
       .then(() => {
         Alert.alert('Success', 'Logged in!');
