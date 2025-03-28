@@ -9,6 +9,7 @@ import { NavigationProp, useNavigation } from '@react-navigation/native';
 import CartModal from '../screens/CartModal';
 
 type ProductsStackParamList = {
+  LogInPage: undefined;
   Products: undefined;
   ProductDetails: { id: number };
   CartModal: undefined;
@@ -46,19 +47,27 @@ const CartButton = () => {
 };
 
 const ProductsStackNav = () => {
+const ProductsStackNav = () => {
   return (
     <ProductsStack.Navigator
+      initialRouteName="LogInPage"   // <--- set Login as the initial route
       screenOptions={{
         headerStyle: {
           backgroundColor: '#1FE687',
         },
         headerTintColor: '#141414',
-        headerRight: () => <CartButton />,
       }}>
-      <ProductsStack.Screen name="Products" component={Products} options={{ headerTitle: 'Neon Shop' }} />
-      <ProductsStack.Screen name="ProductDetails" component={ProductDetails} options={{ headerTitle: '' }} />
-      <ProductsStack.Screen name="CartModal" component={CartModal} options={{ headerShown: false, presentation: 'modal' }} />
+      {/* Login screen */}
+        <ProductsStack.Screen
+          name="LogInPage"
+          component={LogInPage}
+          options={{ headerTitle: 'Log In' }}
+        />
+        <ProductsStack.Screen name="Products" component={Products} options={{ headerTitle: 'Neon Shop', headerRight: () => <CartButton /> }} />
+        <ProductsStack.Screen name="ProductDetails" component={ProductDetails} options={{ headerTitle: '', headerRight: () => <CartButton /> }} />
+        <ProductsStack.Screen name="CartModal" component={CartModal} options={{ headerShown: false, presentation: 'modal' }} />
     </ProductsStack.Navigator>
+
   );
 };
 
