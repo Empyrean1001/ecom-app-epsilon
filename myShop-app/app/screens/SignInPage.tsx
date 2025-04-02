@@ -1,61 +1,63 @@
-// src/screens/Login.tsx
+
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import {getAuth} from '@react-native-firebase/auth';
 import { NavigationProp } from '@react-navigation/native';
 import { ProductsStackParamList } from '../navigation/ProductsStackNav'; // or wherever this is defined
 import { app } from '../../App'; // Adjust the path to your firebaseConfig
-import { trackEvent } from '../components/AnalyticsTracker';
 
-type LoginProps = {
-  navigation: NavigationProp<ProductsStackParamList, 'Login'>;
+type SigninProps = {
+  navigation: NavigationProp<ProductsStackParamList, 'Signin'>;
 };
 
-const LogInPage: React.FC<LoginProps> = ({ navigation }) => {
+const SignInPage: React.FC<SigninProps> = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const authInstance = getAuth();
 
-  useEffect(() => {
-    const unsubscribe = authInstance.onAuthStateChanged((user) => {
-      if (user) {
-        // If already logged in, navigate to Products
-        navigation.replace('Products');
-      }
-    });
-    return unsubscribe;
-  }, [navigation]);
+  // Initialize the auth object once
+//   const auth = getAuth(app);
+//
 
-  const handleLogin = () => {
+//   useEffect(() => {
+//     const unsubscribe = authInstance.onAuthStateChanged((user) => {
+//       if (user) {
+//         // If already logged in, navigate to Products
+//         navigation.replace('Products');
+//       }
+//     });
+//     return unsubscribe;
+//   }, [navigation]);
+
+  const handleSignin = () => {
     if (!email || !password) {
       Alert.alert('Error', 'Please enter both email and password');
       return;
     }
 
     authInstance
-      .signInWithEmailAndPassword(email, password)
+      .createUserWithEmailAndPassword(email, password)
       .then(() => {
-        Alert.alert('Success', 'Logged in!');
-        // Analytics event for successful log in
-        trackEvent('successful_login', {
-            sign_up_method: "email",
-            login_status: "successful"
-        });
-        navigation.navigate('Products');
+        console.log("User Account Created & signed in");
       })
-      .catch((error) => {
-        Alert.alert('Login Error', error.message);
+      .catch(error => {
+        if (error.code === 'auth/email-already-in-use') {
+            console.log('The email address is already in use!');
+        }
+        if (error.code === 'auth/invalid-email') {
+              console.log('That email address is invalid!');
+        }
+        console.error(error);
       });
-
   };
 
-  const NavToSignInPage = () => {
-    navigation.navigate('SignInPage');
+  const NavToLogInPage = () => {
+      navigation.navigate('LogInPage');
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Welcome to Neon Shop! Please Log In</Text>
+      <Text style={styles.title}>Welcome to Neon Shop! Please Sign In</Text>
 
       <TextInput
         style={styles.input}
@@ -76,19 +78,19 @@ const LogInPage: React.FC<LoginProps> = ({ navigation }) => {
         onChangeText={(text) => setPassword(text)}
       />
 
-      <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-        <Text style={styles.loginButtonText}>Log In</Text>
+      <TouchableOpacity style={styles.signinButton} onPress={handleSignin}>
+        <Text style={styles.signinButtonText}>Sign In</Text>
       </TouchableOpacity>
 
       {/* Optional Sign Up Flow */}
-      <TouchableOpacity onPress={NavToSignInPage}>
-        <Text style={styles.linkText}>Don't have an account? Sign up here</Text>
+      <TouchableOpacity onPress={NavToLogInPage}>
+        <Text style={styles.linkText}>Already Have An Account? Log In Here</Text>
       </TouchableOpacity>
     </View>
   );
 };
 
-export default LogInPage;
+export default SignInPage;
 
 const styles = StyleSheet.create({
   container: {
@@ -111,7 +113,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     fontSize: 16,
   },
-  loginButton: {
+  signinButton: {
     height: 50,
     borderRadius: 8,
     backgroundColor: '#1FE687',
@@ -119,7 +121,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 16,
   },
-  loginButtonText: {
+  signinButtonText: {
     color: '#141414',
     fontSize: 18,
     fontWeight: '600',
