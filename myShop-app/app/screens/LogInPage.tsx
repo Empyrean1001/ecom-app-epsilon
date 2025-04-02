@@ -1,11 +1,12 @@
 // src/screens/Login.tsx
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
-import {getAuth} from '@react-native-firebase/auth';
+import { getAuth } from '@react-native-firebase/auth';
+import { getAnalytics }from '@react-native-firebase/analytics';
 import { NavigationProp } from '@react-navigation/native';
 import { ProductsStackParamList } from '../navigation/ProductsStackNav'; // or wherever this is defined
 import { app } from '../../App'; // Adjust the path to your firebaseConfig
-import { trackEvent } from '../components/AnalyticsTracker';
+import { trackEvent, trackAppInstanceId } from '../components/AnalyticsTracker';
 
 type LoginProps = {
   navigation: NavigationProp<ProductsStackParamList, 'Login'>;
@@ -15,6 +16,9 @@ const LogInPage: React.FC<LoginProps> = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const authInstance = getAuth();
+  const analytics = getAnalytics();
+
+  trackAppInstanceId();
 
   useEffect(() => {
     const unsubscribe = authInstance.onAuthStateChanged((user) => {

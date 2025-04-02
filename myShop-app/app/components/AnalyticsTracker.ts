@@ -1,4 +1,4 @@
-import getAnalytics from '@react-native-firebase/analytics';
+import { getAnalytics } from '@react-native-firebase/analytics';
 const analytics = getAnalytics();
 
 export async function trackEvent(
@@ -12,3 +12,15 @@ export async function trackEvent(
     console.error('Error sending event to GA4', error);
   }
 }
+
+export async function trackAppInstanceId(): Promise<string | null> {
+
+    try{
+        const appInstanceId = await analytics.getAppInstanceId();
+        console.log('App instance ID is: ', appInstanceId);
+      } catch(error) {
+        console.error('There was an error in fetching the app Instance ID', error);
+      }
+
+}
+
