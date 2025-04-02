@@ -9,18 +9,22 @@ first install the dependencies using the command:
 ```bash
 npm install
 ```
-This installs the required packages and dependencies in the npm module app
+This installs the required packages and dependencies in the npm module app.
 
 ```bash
 npx expo prebuild
 ```
-This builds the expo app into a android app that can run firebase analytics realtime 
+This builds the expo app into a android app that can run firebase analytics realtime.
 
-Make the following changes in the given directories as well:
+Make the following changes in the given directories as well -
+
 If in android/app/ google-services.json file is not present do this - 
+
     - Go to the firebase console and sign in using the company email. From project overview at the top left, go the the project settings page and download the google-services.json file.
     - Move the file to android/app/ folder. 
+
 Download the gtm container file as a json file and move it to the following path - 
+
     - Make a new folder in android/app/src/main/res/ called raw.
     - shift the file to this raw folder.
 
