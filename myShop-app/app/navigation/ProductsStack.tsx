@@ -6,12 +6,13 @@ import SignInPage from '../screens/SignInPage';
 import UserProfile from '../screens/UserProfile';
 import PreviousOrders from '../screens/PreviousOrders';
 import { TouchableOpacity, Text, View, StyleSheet } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import useCartStore from '@/state/cartStore';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import CartModal from '../screens/CartModal';
 import HeaderButtons from '../components/HeaderButtons';
+import trackScreenView from '../components/AnalyticsTracker';
 
 type ProductsStackParamList = {
   LogInPage: undefined;
@@ -55,6 +56,8 @@ export type StackNavigation = NavigationProp<ProductsStackParamList>;
 // };
 
 const ProductsStackNav = () => {
+
+
   return (
     <ProductsStack.Navigator
       initialRouteName="LogInPage"   // <--- set Login as the initial route
@@ -107,7 +110,6 @@ const ProductsStackNav = () => {
           options={{ headerTitle: 'Previous Orders' }}
         />
     </ProductsStack.Navigator>
-
   );
 };
 

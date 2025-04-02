@@ -1,5 +1,5 @@
 // src/screens/Login.tsx
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { getAuth } from '@react-native-firebase/auth';
 import { getAnalytics }from '@react-native-firebase/analytics';
@@ -18,17 +18,18 @@ const LogInPage: React.FC<LoginProps> = ({ navigation }) => {
   const authInstance = getAuth();
   const analytics = getAnalytics();
 
-  trackAppInstanceId();
-
-  useEffect(() => {
-    const unsubscribe = authInstance.onAuthStateChanged((user) => {
-      if (user) {
-        // If already logged in, navigate to Products
-        navigation.replace('Products');
-      }
-    });
-    return unsubscribe;
-  }, [navigation]);
+//   trackAppInstanceId();
+//   const hasNavigated = useRef(false);
+//   useEffect(() => {
+//     const unsubscribe = authInstance.onAuthStateChanged((user) => {
+//       if (user && !hasNavigated.current) {
+//         // If already logged in, navigate to Products
+//         hasNavigated.current = true;
+//         navigation.replace('Products');
+//       }
+//     });
+//     return unsubscribe;
+//   }, [navigation]);
 
   const handleLogin = () => {
     if (!email || !password) {

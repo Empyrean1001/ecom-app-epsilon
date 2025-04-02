@@ -24,3 +24,18 @@ export async function trackAppInstanceId(): Promise<string | null> {
 
 }
 
+export async function trackScreenView(
+    screenClass: string,
+    screenName: string
+): Promise<void> {
+    try {
+        await analytics.logScreenView({
+            screen_name: screenName,
+            screen_class: screenClass,
+        });
+        console.log(`Successfully viewed the screen '${screenName}'`);
+    } catch(error) {
+        console.error('Error sending screen data to GA4 ', error);
+    }
+}
+
